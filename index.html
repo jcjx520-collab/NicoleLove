@@ -19,7 +19,7 @@
                 linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
                 url('laopo.png');
             background-size: cover;
-            background-position: center;
+            background-position: center center;
             background-repeat: no-repeat;
             background-attachment: fixed;
             min-height: 100vh;
@@ -32,7 +32,6 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* 确保覆盖层足够深 */
         .overlay {
             position: fixed;
             top: 0;
@@ -109,14 +108,13 @@
             box-shadow: 0 8px 25px rgba(0,0,0,0.2);
         }
 
-        .button:hover, .button:active {
+        .button:active {
             background: rgba(255, 255, 255, 0.35);
             transform: scale(1.05);
             color: rgba(255, 105, 180, 0.9);
             border-color: rgba(255, 105, 180, 0.9);
         }
 
-        /* GIF 显示区 */
         .gif-container {
             display: none;
             position: fixed;
@@ -124,7 +122,7 @@
             left: 0;
             width: 100vw;
             height: 100vh;
-            background: rgba(0, 0, 0, 0.85);
+            background: rgba(0, 0, 0, 0.95);
             z-index: 100;
             justify-content: center;
             align-items: center;
@@ -164,7 +162,6 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
 
-        /* 下雪动画 */
         .snowflake {
             position: absolute;
             color: #ffffff;
@@ -214,7 +211,6 @@
             75% { transform: scale(1.2); }
         }
 
-        /* 手机优化 */
         @media (max-width: 768px) {
             body {
                 background-attachment: scroll;
@@ -237,7 +233,6 @@
             }
         }
 
-        /* 超小屏幕优化 */
         @media (max-width: 380px) {
             .container {
                 padding: 10px;
@@ -255,7 +250,6 @@
     </style>
 </head>
 <body>
-    <!-- 自动循环播放音频 -->
     <audio id="bgMusic" loop preload="auto" style="display: none;">
         <source src="Xiaobao.mp3" type="audio/mpeg">
         您的浏览器不支持音频播放。
@@ -287,7 +281,6 @@
         <button class="button" onclick="showGif()">答应我 笑一个❤️</button>
     </div>
 
-    <!-- GIF 模态框 -->
     <div class="gif-container" id="gifContainer">
         <button class="close-gif" onclick="closeGif()">✕</button>
         <img src="R.gif" alt="惊喜GIF" class="gif">
@@ -295,15 +288,12 @@
     </div>
 
     <script>
-        // 音乐播放逻辑
         document.addEventListener('DOMContentLoaded', function() {
             const music = document.getElementById('bgMusic');
             music.volume = 0.7;
             
-            // 尝试自动播放
             setTimeout(() => {
                 music.play().catch(error => {
-                    console.log('需要用户交互才能播放音乐');
                     document.addEventListener('click', function startMusic() {
                         music.play();
                         document.removeEventListener('click', startMusic);
@@ -312,7 +302,6 @@
             }, 1000);
         });
 
-        // 生成下雪
         function createSnow() {
             const snow = document.createElement('div');
             snow.className = 'snowflake';
@@ -328,23 +317,15 @@
             }, 8000);
         }
 
-        // 持续生成雪花
         setInterval(createSnow, 200);
 
-        // 显示GIF
         function showGif() {
             document.getElementById('gifContainer').style.display = 'flex';
         }
 
-        // 关闭GIF
         function closeGif() {
             document.getElementById('gifContainer').style.display = 'none';
         }
-        
-        // 触摸优化
-        document.addEventListener('touchstart', function() {
-            // 触摸支持
-        });
     </script>
 </body>
 </html>
