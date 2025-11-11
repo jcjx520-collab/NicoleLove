@@ -5,118 +5,115 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>大宝的守护</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
         body {
-            body {
             margin: 0;
             padding: 0;
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background-image: url('laopo.png');
-            background-size: cover;                    /* 改为cover让图片覆盖整个屏幕 */
+            background: 
+                linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+                url('laopo.png');
+            background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
             background-attachment: fixed;
-            height: 100vh;
-            width: 100vw;
+            min-height: 100vh;
+            width: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow: hidden;
             position: relative;
             -webkit-font-smoothing: antialiased;
             -webkit-tap-highlight-color: transparent;
-            -webkit-touch-callout: none;
-            -webkit-user-select: none;
-        }
         }
 
-        /* 半透明覆盖层，让文字更清晰 */
+        /* 确保覆盖层足够深 */
         .overlay {
-            position: absolute;
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.4);
+            background: rgba(0, 0, 0, 0.6);
             z-index: 1;
         }
 
         .container {
             text-align: center;
             z-index: 10;
-            color: rgba(255, 182, 193, 0.7); /* ← 浅粉红色 + 70%透明度 */
+            color: rgba(255, 182, 193, 0.9);
             animation: fadeIn 2s ease-in-out;
             padding: 20px;
-            max-width: 90vw;
-            box-sizing: border-box;
+            width: 90%;
+            max-width: 600px;
             position: relative;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            overflow-y: auto;
         }
 
         h1 {
-            font-size: clamp(1.8em, 4vw, 2.5em);
-            margin-top: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            font-size: clamp(1.8em, 6vw, 2.8em);
+            margin: 20px 0;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.8);
             animation: pulse 2s infinite;
         }
 
         p {
-            font-size: clamp(1em, 2.5vw, 1.3em);
-            margin-bottom: 10px;
+            font-size: clamp(1em, 4vw, 1.4em);
+            margin: 15px 0;
             line-height: 1.6;
-            opacity: 1; /* 覆盖容器opacity，确保p不额外淡 */
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+            text-shadow: 1px 1px 4px rgba(0,0,0,0.6);
         }
 
         .poem {
             font-style: italic;
-            font-size: clamp(0.9em, 2vw, 1.1em);
-            margin: 20px 0;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 15px;
-            border-left: 4px solid #ff4757;
-            line-height: 1.6;
+            font-size: clamp(0.9em, 3.5vw, 1.2em);
+            margin: 25px 0;
+            padding: 25px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            border-left: 5px solid #ff4757;
+            line-height: 1.7;
             text-align: left;
-            max-width: 600px;
-            margin: 20px auto;
-            color: rgba(255, 182, 193, 0.7); /* ← 诗句同步70%透明浅粉 */
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
-            max-height: 40vh;
-            overflow-y: auto;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            color: rgba(255, 182, 193, 0.9);
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
         }
 
         .heart {
-            font-size: clamp(2.5em, 7vw, 4em);
+            font-size: clamp(3em, 10vw, 5em);
             color: #ff4757;
             animation: heartbeat 1.5s ease-in-out infinite;
-            margin: -30px 0;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+            margin: 20px 0;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+            filter: drop-shadow(0 0 10px rgba(255, 71, 87, 0.5));
         }
 
         .button {
-            background: rgba(255, 255, 255, 0.3);
-            border: 2px solid rgba(255, 182, 193, 0.7); /* ← 按钮边框70%透明浅粉 */
-            color: rgba(255, 182, 193, 0.7); /* ← 按钮文字70%透明浅粉 */
-            padding: 15px 25px;
-            font-size: clamp(0.9em, 2vw, 1.1em);
+            background: rgba(255, 255, 255, 0.25);
+            border: 2px solid rgba(255, 182, 193, 0.8);
+            color: rgba(255, 182, 193, 0.9);
+            padding: 18px 35px;
+            font-size: clamp(1em, 4vw, 1.3em);
             border-radius: 50px;
             cursor: pointer;
             transition: all 0.3s;
-            margin-top: 10px;
+            margin: 25px 0;
             touch-action: manipulation;
-            text-shadow: 1px 1px 1px rgba(0,0,0,0.2);
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
         }
 
         .button:hover, .button:active {
-            background: rgba(255, 255, 255, 0.4);
+            background: rgba(255, 255, 255, 0.35);
             transform: scale(1.05);
-            color: rgba(255, 105, 180, 0.7); /* ← hover时稍深粉，保持70%透明 */
-            border-color: rgba(255, 105, 180, 0.7);
+            color: rgba(255, 105, 180, 0.9);
+            border-color: rgba(255, 105, 180, 0.9);
         }
 
         /* GIF 显示区 */
@@ -127,42 +124,44 @@
             left: 0;
             width: 100vw;
             height: 100vh;
-            background: rgba(0, 0, 0, 0.7);
-            z-index: 20;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 100;
             justify-content: center;
             align-items: center;
             animation: fadeIn 0.5s ease-in-out;
-            flex-direction: column; /* ← 竖向排列，GIF在上，文字在下 */
+            flex-direction: column;
         }
 
         .gif {
-            max-width: 95vw; /* ← GIF更大，95vw全宽适配 */
-            max-height: 70vh; /* ← 高度加大，但留空间给下方文字 */
-            border-radius: 10px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
-            margin-bottom: 20px; /* ← 与下方文字间距 */
+            width: 95%;
+            max-width: 400px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            margin-bottom: 25px;
         }
 
         .gif-text {
-            color: rgba(255, 182, 193, 0.9); /* ← 大字体浅粉，稍高透明度突出 */
-            font-size: clamp(2.5em, 8vw, 4em); /* ← 大字体，响应式 */
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            color: rgba(255, 182, 193, 0.95);
+            font-size: clamp(2.5em, 10vw, 4em);
+            text-shadow: 3px 3px 8px rgba(0,0,0,0.7);
             margin: 0;
             text-align: center;
+            font-weight: bold;
         }
 
         .close-gif {
             position: absolute;
-            top: 20px;
-            right: 20px;
-            background: rgba(255, 255, 255, 0.8);
+            top: 25px;
+            right: 25px;
+            background: rgba(255, 255, 255, 0.9);
             border: none;
             color: #333;
-            padding: 10px 15px;
+            padding: 12px 18px;
             border-radius: 50px;
             cursor: pointer;
-            font-size: 1em;
-            z-index: 21;
+            font-size: 1.1em;
+            z-index: 101;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
 
         /* 下雪动画 */
@@ -171,9 +170,20 @@
             color: #ffffff;
             pointer-events: none;
             animation: snowfall linear infinite;
-            font-size: clamp(12px, 2vw, 20px);
-            opacity: 1;
-            text-shadow: none;
+            font-size: clamp(15px, 4vw, 22px);
+            opacity: 0.8;
+            z-index: 2;
+            text-shadow: 0 0 5px rgba(255,255,255,0.5);
+        }
+
+        .snows {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 3;
         }
 
         @keyframes snowfall {
@@ -188,8 +198,8 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.8); }
-            to { opacity: 1; transform: scale(1); }
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         @keyframes pulse {
@@ -199,69 +209,61 @@
 
         @keyframes heartbeat {
             0%, 100% { transform: scale(1); }
-            14% { transform: scale(1.3); }
-            28% { transform: scale(1); }
-            42% { transform: scale(1.3); }
-            70% { transform: scale(1); }
+            25% { transform: scale(1.3); }
+            50% { transform: scale(1); }
+            75% { transform: scale(1.2); }
         }
 
-        .snows {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 2;
-        }
-
-        /* 9:16 竖屏手机Safari专用媒体查询 */
-        @media screen and (orientation: portrait) and (max-aspect-ratio: 9/16) {
-            body {
-                height: 100vh;
-                width: 100vw;
-            }
-            .container {
-                padding: 10px;
-                justify-content: center;
-                align-items: center;
-                max-height: 100vh;
-            }
-            .poem {
-                font-size: 0.95em;
-                padding: 15px;
-                max-height: 30vh;
-            }
-            .gif {
-                max-width: 95vw;
-                max-height: 60vh; /* ← 竖屏下GIF高度适配，留文字空间 */
-            }
-            .gif-text {
-                font-size: 3em; /* ← 竖屏大字体固定 */
-            }
-            .snowflake {
-                font-size: 16px;
-            }
-        }
-
-        /* 通用手机优化 */
+        /* 手机优化 */
         @media (max-width: 768px) {
             body {
-                overflow-y: auto;
+                background-attachment: scroll;
             }
+            
             .container {
-                margin-top: 0;
+                padding: 15px;
+                width: 95%;
+            }
+            
+            .poem {
+                padding: 20px;
+                margin: 20px 0;
+                font-size: 1em;
+            }
+            
+            .button {
+                padding: 16px 30px;
+                margin: 20px 0;
+            }
+        }
+
+        /* 超小屏幕优化 */
+        @media (max-width: 380px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .poem {
+                padding: 15px;
+                font-size: 0.9em;
+            }
+            
+            h1 {
+                font-size: 1.6em;
             }
         }
     </style>
 </head>
 <body>
-    <!-- 自动循环播放音频：放入同文件夹的Xiaobao.mp3，页面加载即播并循环；隐藏不显示控件 -->
-    <audio id="bgMusic" loop preload="auto" autoplay style="display: none;">
+    <!-- 自动循环播放音频 -->
+    <audio id="bgMusic" loop preload="auto" style="display: none;">
         <source src="Xiaobao.mp3" type="audio/mpeg">
         您的浏览器不支持音频播放。
     </audio>
 
     <div class="overlay"></div>
     <div class="snows" id="snows"></div>
+    
     <div class="container">
         <h1>小宝，我在这里</h1>
         <div class="heart">💗</div>
@@ -281,7 +283,7 @@
             — 大宝写给小宝的，专属永恒之诗
         </div>
         
-        <p style="font-size: clamp(1.3em, 3.5vw, 1.8em); margin-top: 20px;">大宝陪着你❤️</p>
+        <p style="font-size: clamp(1.4em, 5vw, 1.8em); margin: 25px 0; font-weight: bold;">大宝陪着你❤️</p>
         <button class="button" onclick="showGif()">答应我 笑一个❤️</button>
     </div>
 
@@ -289,61 +291,60 @@
     <div class="gif-container" id="gifContainer">
         <button class="close-gif" onclick="closeGif()">✕</button>
         <img src="R.gif" alt="惊喜GIF" class="gif">
-        <p class="gif-text">大宝爱你</p> <!-- ← GIF下方大字体文字 -->
+        <p class="gif-text">大宝爱你</p>
     </div>
 
     <script>
-        // 简化版音乐播放逻辑 - 直接尝试播放
+        // 音乐播放逻辑
         document.addEventListener('DOMContentLoaded', function() {
             const music = document.getElementById('bgMusic');
             music.volume = 0.7;
             
-            // 直接尝试播放
+            // 尝试自动播放
             setTimeout(() => {
                 music.play().catch(error => {
-                    console.log('自动播放可能需要用户交互');
-                    // 如果自动播放失败，用户点击页面时会自动播放
+                    console.log('需要用户交互才能播放音乐');
                     document.addEventListener('click', function startMusic() {
                         music.play();
                         document.removeEventListener('click', startMusic);
-                    });
+                    }, { once: true });
                 });
-            }, 500);
+            }, 1000);
         });
 
         // 生成下雪
         function createSnow() {
             const snow = document.createElement('div');
             snow.className = 'snowflake';
-            snow.innerHTML = '⚪';
+            snow.innerHTML = '❄️';
             snow.style.left = Math.random() * 100 + 'vw';
             snow.style.animationDuration = (Math.random() * 5 + 3) + 's';
             snow.style.animationDelay = Math.random() * 2 + 's';
-            snow.style.fontSize = (Math.random() * 10 + 12) + 'px';
+            snow.style.opacity = Math.random() * 0.7 + 0.3;
             document.getElementById('snows').appendChild(snow);
 
-            // 移除雪花元素以優化性能
             setTimeout(() => {
-                if (snow.parentNode) {
-                    snow.remove();
-                }
+                if (snow.parentNode) snow.remove();
             }, 8000);
         }
 
-        // 持續生成雪花
+        // 持续生成雪花
         setInterval(createSnow, 200);
 
-        // 顯示GIF
+        // 显示GIF
         function showGif() {
             document.getElementById('gifContainer').style.display = 'flex';
         }
 
-        // 關閉GIF
+        // 关闭GIF
         function closeGif() {
             document.getElementById('gifContainer').style.display = 'none';
         }
+        
+        // 触摸优化
+        document.addEventListener('touchstart', function() {
+            // 触摸支持
+        });
     </script>
 </body>
-
 </html>
-
